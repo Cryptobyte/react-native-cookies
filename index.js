@@ -29,8 +29,8 @@ module.exports = {
   clearAll: (useWebKit = false) => CookieManager.clearAll(useWebKit),
   get: (url, useWebKit = false) => CookieManager.get(url, useWebKit),
   set: (cookie, useWebKit = false) => CookieManager.set(cookie, useWebKit),
-  copyCookie(name, origin, version, expires, useWebKit = false) {
-    CookieManager.getAll().then((res) => {
+  copyCookie(name, origin, version, expires, toWebKit = false) {
+    CookieManager.getAll(!toWebKit).then((res) => {
       if (res[name]) {
         CookieManager.set({
           name: res[name].name,
@@ -41,7 +41,7 @@ module.exports = {
           version: version,
           expiration: expires
 
-        }, useWebKit).then((res) => { 
+        }, toWebKit).then((res) => { 
           // Todo: Return callback
         });
       }
