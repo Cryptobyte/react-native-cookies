@@ -29,6 +29,24 @@ module.exports = {
   clearAll: (useWebKit = false) => CookieManager.clearAll(useWebKit),
   get: (url, useWebKit = false) => CookieManager.get(url, useWebKit),
   set: (cookie, useWebKit = false) => CookieManager.set(cookie, useWebKit),
+  copyCookie(name, origin, version, expires, useWebKit = false) {
+    CookieManager.getAll().then((res) => {
+      if (res[name]) {
+        CookieManager.set({
+          name: res[name].name,
+          value: res[name].value,
+          domain: res[name].domain,
+          origin: origin,
+          path: res[name].path,
+          version: version,
+          expiration: expires
+
+        }, useWebKit).then((res) => { 
+          // Todo: Return callback
+        });
+      }
+    });
+  }
 };
 
 for (var i = 0; i < functions.length; i++) {
